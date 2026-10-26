@@ -10,10 +10,11 @@ Right now the system can:
 
 - Start in a `DISARMED` state
 - Arm the system using a code
-- Detect when the reed switch changes state
-- Detect a door opening using GPIO event handling
+- Detect when the door opens using a reed switch
 - Change from `ARMED` to `ALARMING` when the door opens
+- Turn on an active buzzer when the alarm is triggered
 - Disarm the system using the correct code
+- Turn off the buzzer when the system is disarmed
 
 The main system states are:
 
@@ -50,8 +51,11 @@ Right now I’m using:
 
 - Raspberry Pi
 - SunFounder starter kit
-- Reed switch module
-- Magnet
+- Reed switch and magnet
+- Breadboard
+- Active Buzzer
+- 5850 Transistor
+- 1kΩ Reisistor
 - Jumper wires
 
 Current reed switch wiring:
@@ -60,13 +64,19 @@ Current reed switch wiring:
 - `GND` → Raspberry Pi `GND`
 - `DO` → Raspberry Pi `GPIO17`
 
+The GPIO Input uses a pull-up resistor, allowing the Pi to detect the reed swith state changes as the door opens and closes.
+
+## Buzzer
+
+The active buzzer is controlled using "GPIO27". A transistor is used so the GPIO pin controls the buzzer without directly powering it. 
+
+The transistor switches power to the buzzer when the system enter the 'ALARMING' state. 
 ## Future Plans
 
 I want to keep building this out slowly and eventually make it feel more like a real security system.
 
 Some things I want to add are:
 
-- Buzzer for an actual alarm sound
 - Motion sensor
 - LEDs for system status
 - Physical keypad for arming and disarming
@@ -76,4 +86,4 @@ Some things I want to add are:
 - Notifications
 - Camera integration
 
-This is still an early prototype, but the main goal is to keep adding features while understanding how each part works instead of just copying a finished project.
+This is still an early prototype, but the main goal is to keep adding features while understanding how each part works.
